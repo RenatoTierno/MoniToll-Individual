@@ -630,21 +630,22 @@
 
             myChart.update();
 
-            if (fkComponente == 2) {
-              verificarCpu(metrica)
-            }
+            veificar(metrica,fkComponente)
+            // if (fkComponente == 2) {
+            //   verificarCpu(metrica)
+            // }
 
-            if (fkComponente == 5) {
-              verificarRam(metrica)
-            }
+            // if (fkComponente == 5) {
+            //   verificarRam(metrica)
+            // }
 
-            if (fkComponente == 9) {
-              verificarDisco(metrica)
-            }
+            // if (fkComponente == 9) {
+            //   verificarDisco(metrica)
+            // }
 
-            if (fkComponente == 12) {
-              verificarInternet(metrica)
-            }
+            // if (fkComponente == 12) {
+            //   verificarInternet(metrica)
+            // }
 
           }
 
@@ -688,6 +689,12 @@
       .then(response => response.json())
       .then(response => console.log(response))
       .catch(err => console.error(err));
+  }
+
+  function veificar(metrica,fkComponente) {
+      if (fkComponente == 2) {
+        
+      }
   }
 
   function verificarInternet(metrica) {
