@@ -630,7 +630,8 @@
 
             myChart.update();
 
-            veificar(metrica,fkComponente)
+            verificar(metrica,fkComponente)
+
             // if (fkComponente == 2) {
             //   verificarCpu(metrica)
             // }
@@ -672,8 +673,10 @@
   }
 </script>
 <script>
-  function alertas(nome, componente, metrica, frase) {
+  function alertas(nome, componente, metrica, frase, alertar) {
 
+
+    if (alertar == 1) {
     const options = {
       method: 'POST',
       headers: {
@@ -689,13 +692,93 @@
       .then(response => response.json())
       .then(response => console.log(response))
       .catch(err => console.error(err));
+  } 
+
+}
+
+  
+
+  function verificar(metrica,fkComponente) {
+
+    let alertar = 0
+    let componente = ""
+    let frase = ""
+
+
+      if (fkComponente == 2) {
+        componente = "CPU"
+      if (metrica > 50 && metrica < 75) {
+      alertar = 1
+      frase = "Alerta: CPU sobrecarregando! Porcentagem de uso: "
+      } 
+      else if (metrica >= 75) {
+      frase = "Perigo: CPU sobrecarregada! Porcentagem de uso: "
+      alertar = 1
+    }
+      }
+
+      if (fkComponente == 5) {
+        componente = "RAM"
+      if (metrica > 50 && metrica < 75) {
+        alertar = 1
+      frase = "Alerta: RAM sobrecarregando! Porcentagem de uso: "
+      } 
+      else if (metrica >= 75) {
+        alertar = 1
+      frase = "Perigo: RAM sobrecarregada! Porcentagem de uso: "
+    }
+  }
+    
+    if (fkComponente == 9) {
+        componente = "Disco"
+      if (metrica > 50 && metrica < 75) {
+        alertar = 1
+      frase = "Alerta: Disco sobrecarregando! Porcentagem de uso: "
+      } 
+      else if (metrica >= 75) {
+        alertar = 1
+      frase = "Perigo: Disco sobrecarregado! Porcentagem de uso: "
+    }
   }
 
-  function veificar(metrica,fkComponente) {
-      if (fkComponente == 2) {
-        
-      }
+    if (fkComponente == 12) {
+        componente = "Internet"
+      if (metrica > 50 && metrica < 75) {
+        alertar = 1
+      frase = "Alerta: Alguns pacotes estão sendo perdidos! Porcentagem de perda de pacotes: "
+      } 
+      else if (metrica >= 75) {
+        alertar = 1
+      frase = "Perigo: Muitos Pacotes Perdidos! Porcentagem de perda de pacotes: "
+    }
   }
+
+    if (fkComponente == 22) {
+        componente = "Temperatura CPU"
+      if (metrica > 50 && metrica < 75) {
+        alertar = 1
+      frase = "Alerta: CPU superaquecendo! Temperatura em ºC: "
+      } 
+      else if (metrica >= 75) {
+        alertar = 1
+      frase = "Perigo: CPU superaquecendo! Temperatura em ºC: "
+    }
+  }
+
+    if (fkComponente == 23) {
+        componente = "Temperatura Placa Mãe"
+      if (metrica > 50 && metrica < 75) {
+        alertar = 1
+      frase = "Alerta: Placa Mãe superaquecendo! Temperatura em ºC: "
+      } 
+      else if (metrica >= 75) {
+        alertar = 1
+      frase = "Perigo: Placa Mãe superaquecendo! Temperatura em ºC: "
+    }
+  }
+  alertas(nome, componente, metrica, frase, alertar)
+}
+
 
   function verificarInternet(metrica) {
     var frase = ""
