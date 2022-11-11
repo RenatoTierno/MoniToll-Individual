@@ -298,7 +298,9 @@
 
 <script>
   var vetor_Componentes = []
-  var nome = sessionStorage.NOME_EMPRESA 
+  var nome = sessionStorage.NOME_USUÁRIO
+  var nomeEmp = sessionStorage.NOME_EMPRESA
+
   function ObterDados(fkTorre) {
 
     var perfil;
@@ -308,7 +310,7 @@
     } else {
       perfil = 'Fun'
     }
-    BemVindo.innerHTML = `Bem vindo, ${nome}.<br> ${perfil}`
+    BemVindo.innerHTML = `Bem vindo, ${nomeEmp}.<br> ${perfil}`
     h4_titulo.innerHTML = `<h3>${sessionStorage.LOCALIZACAO}</h3>`
 
 
@@ -673,7 +675,7 @@
   }
 </script>
 <script>
-  function alertas(nome, componente, metrica, frase, alertar) {
+  function alertas(nomeEmp, componente, metrica, frase, alertar) {
 
     if (alertar == 1) {
     const open = document.getElementById('open');
@@ -688,7 +690,7 @@
         'content-type': 'application/json'
       },
       body: JSON.stringify({
-        query: `mutation {           createCard(input: {             pipe_id:302621694,             title: "Card",             fields_attributes:[               {field_id: "nome_da_empresa", field_value: "${nome}"},{field_id: "descri_o_do_alerta", field_value: "${componente}"},{field_id: "m_tricas", field_value: " ${frase}: ${metrica}"}             ],           }) {               card {                 title               }             }           }`
+        query: `mutation {           createCard(input: {             pipe_id:302621694,             title: "Card",             fields_attributes:[               {field_id: "nome_da_empresa", field_value: "${nomeEmp}"},{field_id: "descri_o_do_alerta", field_value: "${componente}"},{field_id: "m_tricas", field_value: " ${frase}: ${metrica}"}             ],           }) {               card {                 title               }             }           }`
       })
     };
     fetch('https://api.pipefy.com/graphql', options)
@@ -823,7 +825,7 @@
       frase = "Perigo"
     }
   }
-  alertas(nome, componente, metrica, frase, alertar)
+  alertas(nomeEmp, componente, metrica, frase, alertar)
 }
 
 

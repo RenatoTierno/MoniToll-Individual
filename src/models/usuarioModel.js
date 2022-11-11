@@ -192,5 +192,4 @@ module.exports = {
     ObterDadosTorre,
     ObterNomeEmp,
     alertas
-    
 };
