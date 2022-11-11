@@ -298,13 +298,14 @@
 
 <script>
   var vetor_Componentes = []
-  
+  var nomeEmp = sessionStorage.NOME_EMPRESA
+  var nome = sessionStorage.NOME_USUÁRIO
 
   function ObterDados(fkTorre) {
     var nomeEmp = sessionStorage.NOME_EMPRESA
     var nome = sessionStorage.NOME_USUÁRIO
     var perfil
-    
+
     if (sessionStorage.FK_PERFIL == 2) {
       perfil = 'Adm'
       AddUsuario.innerHTML = `<a><i class="now-ui-icons business_badge"></i><p class="maior">Adicionar Usuario</p></a>`
@@ -633,7 +634,7 @@
 
             myChart.update();
 
-            verificar(metrica,fkComponente)
+            verificar(nomeEmp,metrica,fkComponente)
 
             // if (fkComponente == 2) {
             //   verificarCpu(metrica)
@@ -749,7 +750,7 @@
 
   } 
 
-  function verificar(metrica,fkComponente) {
+  function verificar(nomeEmp,metrica,fkComponente) {
 
     let alertar = 0
     let componente = ""
