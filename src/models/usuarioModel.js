@@ -163,13 +163,13 @@ function ObterNomeEmp(fkEmpresa) {
     return database.executar(instrucao);
 }
 
-function alertas(componente,metrica,criticidade) {
+function alertas(nomeEmp,componente,metrica,criticidade) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function alertas():",componente,metrica,criticidade);
 
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
     var instrucao = `
-    INSERT INTO AlertaRenato (componente,leitura,criticidade) VALUES  ('${componente}', '${metrica}', '${criticidade}');
+    INSERT INTO AlertaRenato (nomeEmpresa,componente,leitura,criticidade) VALUES ('${nomeEmp}','${componente}', '${metrica}', '${criticidade}');
     `;
     
     console.log("Executando a instrução SQL: \n" + instrucao);

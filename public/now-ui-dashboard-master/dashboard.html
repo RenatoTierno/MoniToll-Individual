@@ -298,12 +298,13 @@
 
 <script>
   var vetor_Componentes = []
-  var nome = sessionStorage.NOME_USUÁRIO
-  var nomeEmp = sessionStorage.NOME_EMPRESA
+  
 
   function ObterDados(fkTorre) {
-
-    var perfil;
+    var nomeEmp = sessionStorage.NOME_EMPRESA
+    var nome = sessionStorage.NOME_USUÁRIO
+    var perfil
+    
     if (sessionStorage.FK_PERFIL == 2) {
       perfil = 'Adm'
       AddUsuario.innerHTML = `<a><i class="now-ui-icons business_badge"></i><p class="maior">Adicionar Usuario</p></a>`
@@ -709,6 +710,7 @@
         componenteServer: componente,
         metricaServer: metrica,
         criticidadeServer: frase,
+        nomeEmpServer: nomeEmp
       })
     }).then(function (resposta) {
       if (resposta.ok) {

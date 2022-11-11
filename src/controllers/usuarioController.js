@@ -457,6 +457,7 @@ function alertas(req, res) {
     var componente = req.body.componenteServer;
     var metrica = req.body.metricaServer;
     var criticidade = req.body.criticidadeServer;
+    var nomeEmp = req.body.nomeEmpServer;
     
 
     // Faça as validações dos valores
