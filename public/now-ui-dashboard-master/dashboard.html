@@ -675,8 +675,11 @@
 <script>
   function alertas(nome, componente, metrica, frase, alertar) {
 
-
     if (alertar == 1) {
+    const open = document.getElementById('open');
+    const modal_container = document.getElementById('modal_container');
+    const close = document.getElementById('close');
+
     const options = {
       method: 'POST',
       headers: {
@@ -685,16 +688,64 @@
         'content-type': 'application/json'
       },
       body: JSON.stringify({
-        query: `mutation {           createCard(input: {             pipe_id:302621694,             title: "Card",             fields_attributes:[               {field_id: "nome_da_empresa", field_value: "${nome}"},{field_id: "descri_o_do_alerta", field_value: "${componente}"},{field_id: "m_tricas", field_value: " ${frase}${metrica}"}             ],           }) {               card {                 title               }             }           }`
+        query: `mutation {           createCard(input: {             pipe_id:302621694,             title: "Card",             fields_attributes:[               {field_id: "nome_da_empresa", field_value: "${nome}"},{field_id: "descri_o_do_alerta", field_value: "${componente}"},{field_id: "m_tricas", field_value: " ${frase}: ${metrica}"}             ],           }) {               card {                 title               }             }           }`
       })
     };
     fetch('https://api.pipefy.com/graphql', options)
       .then(response => response.json())
       .then(response => console.log(response))
       .catch(err => console.error(err));
+
+      fetch("/usuarios/alertas", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        componenteServer: componente,
+        metricaServer: metrica,
+        criticidadeServer: frase,
+      })
+    }).then(function (resposta) {
+      if (resposta.ok) {
+          
+          
+          console.log(`Enviados para o banco com sucesso!`)
+
+          modal_container2.classList.add('show');
+
+
+          close2.addEventListener('click', () => {
+          modal_container2.classList.remove('show');
+          });
+      } else {
+        
+        console.log(`Falha ao enviar para o banco!`)
+
+
+        modal_container.classList.add('show');
+
+        close.addEventListener('click', () => {
+        modal_container.classList.remove('show');
+        });
+        throw ("Houve um erro ao tentar realizar o cadastro!");
+      }
+    }).catch(function (resposta) {
+      console.log(`#ERRO: ${resposta}`);
+    });
+
+    return false;
+  }
+
+      
+
+
+
   } 
 
-}
+
 
   
 
@@ -709,10 +760,10 @@
         componente = "CPU"
       if (metrica > 50 && metrica < 75) {
       alertar = 1
-      frase = "Alerta: CPU sobrecarregando! Porcentagem de uso: "
+      frase = "Alerta"
       } 
       else if (metrica >= 75) {
-      frase = "Perigo: CPU sobrecarregada! Porcentagem de uso: "
+      frase = "Perigo"
       alertar = 1
     }
       }
@@ -721,11 +772,11 @@
         componente = "RAM"
       if (metrica > 50 && metrica < 75) {
         alertar = 1
-      frase = "Alerta: RAM sobrecarregando! Porcentagem de uso: "
+      frase = "Alerta"
       } 
       else if (metrica >= 75) {
         alertar = 1
-      frase = "Perigo: RAM sobrecarregada! Porcentagem de uso: "
+      frase = "Perigo"
     }
   }
     
@@ -733,11 +784,11 @@
         componente = "Disco"
       if (metrica > 50 && metrica < 75) {
         alertar = 1
-      frase = "Alerta: Disco sobrecarregando! Porcentagem de uso: "
+      frase = "Alerta"
       } 
       else if (metrica >= 75) {
         alertar = 1
-      frase = "Perigo: Disco sobrecarregado! Porcentagem de uso: "
+      frase = "Perigo"
     }
   }
 
@@ -745,11 +796,11 @@
         componente = "Internet"
       if (metrica > 50 && metrica < 75) {
         alertar = 1
-      frase = "Alerta: Alguns pacotes estão sendo perdidos! Porcentagem de perda de pacotes: "
+      frase = "Alerta"
       } 
       else if (metrica >= 75) {
         alertar = 1
-      frase = "Perigo: Muitos Pacotes Perdidos! Porcentagem de perda de pacotes: "
+      frase = "Perigo"
     }
   }
 
@@ -757,11 +808,11 @@
         componente = "Temperatura CPU"
       if (metrica > 50 && metrica < 75) {
         alertar = 1
-      frase = "Alerta: CPU superaquecendo! Temperatura em ºC: "
+      frase = "Alerta"
       } 
       else if (metrica >= 75) {
         alertar = 1
-      frase = "Perigo: CPU superaquecendo! Temperatura em ºC: "
+      frase = "Perigo"
     }
   }
 
@@ -769,68 +820,74 @@
         componente = "Temperatura Placa Mãe"
       if (metrica > 50 && metrica < 75) {
         alertar = 1
-      frase = "Alerta: Placa Mãe superaquecendo! Temperatura em ºC: "
+      frase = "Alerta"
       } 
       else if (metrica >= 75) {
         alertar = 1
-      frase = "Perigo: Placa Mãe superaquecendo! Temperatura em ºC: "
+      frase = "Perigo"
     }
   }
   alertas(nome, componente, metrica, frase, alertar)
 }
 
 
-  function verificarInternet(metrica) {
-    var frase = ""
-    // incluir uma nova medida de temperatura  
-    if (metrica > 15 && metrica < 30) {
-      frase = "Alerta: Alguns pacotes estão sendo perdidos! Porcentagem de perda de pacotes: "
-      console.log('Cheguei aqui')
-      alertas(nome, "Pacotes", metrica, frase)
-    } else if (metrica > 30) {
-      frase = "Perigo: Muitos Pacotes Perdidos! Porcentagem de perda de pacotes: "
-      alertas(nome, "Pacotes", metrica, frase)
-    }
-  }
+    
 
-  function verificarRam(metrica) {
-    var frase = ""
-    // incluir uma nova medida de temperatura  
-    if (metrica > 85 && metrica < 100) {
-      frase = "Alerta: RAM sobrecarregando! Porcentagem de uso: "
-      console.log('Cheguei aqui')
-      alertas(nome, "RAM", metrica, frase)
-    } else if (metrica == 100) {
-      frase = "Perigo: RAM está sobrecarregada! Porcentagem de uso: "
-      alertas(nome, "RAM", metrica, frase)
-    }
-  }
 
-  function verificarCpu(metrica) {
-    var frase = ""
-    // incluir uma nova medida de temperatura  
-    if (metrica > 50 && metrica < 75) {
-      frase = "Alerta: CPU sobrecarregando! Porcentagem de uso: "
-      console.log('Cheguei aqui')
-      alertas(nome, "CPU", metrica, frase)
-    } else if (metrica >= 75) {
-      frase = "Perigo: CPU sobrecarregada! Porcentagem de uso: "
-      alertas(nome, "CPU", metrica, frase)
-    }
-  }
 
-  function verificarDisco(metrica) {
-    var frase = ""
-    // incluir uma nova medida de temperatura  
-    if (metrica >60 && metrica <= 80) {
-      frase = "Alerta: Disco sobrecarregando! Porcentagem de uso: "
-      console.log('Cheguei aqui')
-      alertas(nome, "Disco", metrica, frase)
-    } else if (metrica > 80) {
-      frase = "Perigo: Disco sobrecarregado! Porcentagem de uso: "
-      alertas(nome, "Disco", metrica, frase)
-    }
-  }
+
+
+  // function verificarInternet(metrica) {
+  //   var frase = ""
+  //   // incluir uma nova medida de temperatura  
+  //   if (metrica > 15 && metrica < 30) {
+  //     frase = "Alerta: Alguns pacotes estão sendo perdidos! Porcentagem de perda de pacotes: "
+  //     console.log('Cheguei aqui')
+  //     alertas(nome, "Pacotes", metrica, frase)
+  //   } else if (metrica > 30) {
+  //     frase = "Perigo: Muitos Pacotes Perdidos! Porcentagem de perda de pacotes: "
+  //     alertas(nome, "Pacotes", metrica, frase)
+  //   }
+  // }
+
+  // function verificarRam(metrica) {
+  //   var frase = ""
+  //   // incluir uma nova medida de temperatura  
+  //   if (metrica > 85 && metrica < 100) {
+  //     frase = "Alerta: RAM sobrecarregando! Porcentagem de uso: "
+  //     console.log('Cheguei aqui')
+  //     alertas(nome, "RAM", metrica, frase)
+  //   } else if (metrica == 100) {
+  //     frase = "Perigo: RAM está sobrecarregada! Porcentagem de uso: "
+  //     alertas(nome, "RAM", metrica, frase)
+  //   }
+  // }
+
+  // function verificarCpu(metrica) {
+  //   var frase = ""
+  //   // incluir uma nova medida de temperatura  
+  //   if (metrica > 50 && metrica < 75) {
+  //     frase = "Alerta: CPU sobrecarregando! Porcentagem de uso: "
+  //     console.log('Cheguei aqui')
+  //     alertas(nome, "CPU", metrica, frase)
+  //   } else if (metrica >= 75) {
+  //     frase = "Perigo: CPU sobrecarregada! Porcentagem de uso: "
+  //     alertas(nome, "CPU", metrica, frase)
+  //   }
+  // }
+
+  // function verificarDisco(metrica) {
+  //   var frase = ""
+  //   // incluir uma nova medida de temperatura  
+  //   if (metrica >60 && metrica <= 80) {
+  //     frase = "Alerta: Disco sobrecarregando! Porcentagem de uso: "
+  //     console.log('Cheguei aqui')
+  //     alertas(nome, "Disco", metrica, frase)
+  //   } else if (metrica > 80) {
+  //     frase = "Perigo: Disco sobrecarregado! Porcentagem de uso: "
+  //     alertas(nome, "Disco", metrica, frase)
+  //   }
+  // }
 
 </script>
 

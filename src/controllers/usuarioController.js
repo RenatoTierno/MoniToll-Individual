@@ -452,6 +452,40 @@ usuarioModel.ObterComponentes(fkTorre)
     );
 }
 }
+function alertas(req, res) {
+    // Crie uma variável que vá recuperar os valores do arquivo dashboard.html
+    var componente = req.body.componenteServer;
+    var metrica = req.body.metricaServer;
+    var criticidade = req.body.criticidadeServer;
+    
+
+    // Faça as validações dos valores
+    if (componente == undefined) {
+        res.status(400).send("Seu componente está undefined!");
+    } else if (metrica == undefined) {
+        res.status(400).send("Sua métrica está undefined!");
+    } else if (criticidade == undefined) {
+        res.status(400).send("Sua criticidade está undefined!");
+    } else {
+        
+        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+        usuarioModel.alertas(componente, metrica, criticidade)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar o cadastro! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
 
 
 
@@ -470,5 +504,6 @@ module.exports = {
     ObterComponentes,
     CadastrarUsuario,
     ObterDadosTorre,
-    ObterNomeEmp
+    ObterNomeEmp,
+    alertas
 }
