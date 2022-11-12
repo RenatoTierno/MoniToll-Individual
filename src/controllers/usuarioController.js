@@ -467,10 +467,12 @@ function alertas(req, res) {
         res.status(400).send("Sua métrica está undefined!");
     } else if (criticidade == undefined) {
         res.status(400).send("Sua criticidade está undefined!");
-    } else {
+    } else if(nomeEmp == undefined) {
+        res.status(400).send("Seu nome da empresa está undefined!");
+    } else{
         
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.alertas(componente, metrica, criticidade)
+        usuarioModel.alertas(nomeEmp,componente, metrica, criticidade)
             .then(
                 function (resultado) {
                     res.json(resultado);

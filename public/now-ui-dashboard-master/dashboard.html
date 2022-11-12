@@ -677,6 +677,8 @@
   }
 </script>
 <script>
+    
+
   function alertas(nomeEmp, componente, metrica, frase, alertar) {
 
     if (alertar == 1) {
@@ -711,7 +713,7 @@
         componenteServer: componente,
         metricaServer: metrica,
         criticidadeServer: frase,
-        nomeEmpServer: nomeEmp
+        nomeEmpServer: nomeEmp,
       })
     }).then(function (resposta) {
       if (resposta.ok) {
