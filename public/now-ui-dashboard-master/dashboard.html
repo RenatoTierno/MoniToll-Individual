@@ -718,20 +718,11 @@
     }).then(function (resposta) {
       if (resposta.ok) {
           
-          
           console.log(`Enviados para o banco com sucesso!`)
 
-
-
-
-          
       } else {
         
-        console.log(`Falha ao enviar para o banco!`)
-
-
-        
-        
+        console.log(`Falha ao enviar para o banco!`) 
       }
     }).catch(function (resposta) {
       console.log(`#ERRO: ${resposta}`);
@@ -739,9 +730,6 @@
 
     return false;
   }
-
-      
-
 
 
   } 
@@ -826,6 +814,7 @@
   }
   alertas(nomeEmp, componente, metrica, frase, alertar)
 }
+
 
 
     
