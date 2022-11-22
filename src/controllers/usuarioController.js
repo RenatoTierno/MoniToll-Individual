@@ -452,6 +452,7 @@ usuarioModel.ObterComponentes(fkTorre)
     );
 }
 }
+
 function alertas(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo dashboard.html
     var componente = req.body.componenteServer;
