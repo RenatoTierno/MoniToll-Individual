@@ -530,6 +530,8 @@
       });
   }
 
+ 
+
 
   function PlotarGrafico(vetor, fkTorre, idCanva, label) {
     var fkComponenteVar = 0
@@ -685,141 +687,11 @@
 <script>
     
 
-  function alertas(nomeEmp, componente, metrica, frase, alertar) {
-
-    if (alertar == 1) {
-    const open = document.getElementById('open');
-    const modal_container = document.getElementById('modal_container');
-    const close = document.getElementById('close');
-
-    const options = {
-      method: 'POST',
-      headers: {
-        accept: 'application/json',
-        Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjozMDIwOTE4NzAsImVtYWlsIjoicmVuYXRvLnRpZXJub0BzcHRlY2guc2Nob29sIiwiYXBwbGljYXRpb24iOjMwMDIwMDc5OX19.u1OD3vfD6im7FYV9owyD6kVPdstkeU3_1tX-WJdZz0Pf5VM8QZ2VEO6vEye9ht82VD7t2bnBqMwtuWywW0rjEg',
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify({
-        query: `mutation {           createCard(input: {             pipe_id:302621694,             title: "Card",             fields_attributes:[               {field_id: "nome_da_empresa", field_value: "${nomeEmp}"},{field_id: "descri_o_do_alerta", field_value: "${componente}"},{field_id: "m_tricas", field_value: " ${frase}: ${metrica}"}             ],           }) {               card {                 title               }             }           }`
-      })
-    };
-    fetch('https://api.pipefy.com/graphql', options)
-      .then(response => response.json())
-      .then(response => console.log(response))
-      .catch(err => console.error(err));
-
-      fetch("/usuarios/alertas", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        // crie um atributo que recebe o valor recuperado aqui
-        // Agora vá para o arquivo routes/usuario.js
-        componenteServer: componente,
-        metricaServer: metrica,
-        criticidadeServer: frase,
-        nomeEmpServer: nomeEmp,
-      })
-    }).then(function (resposta) {
-      if (resposta.ok) {
-          
-          console.log(`Enviados para o banco com sucesso!`)
-
-      } else {
-        
-        console.log(`Falha ao enviar para o banco!`) 
-      }
-    }).catch(function (resposta) {
-      console.log(`#ERRO: ${resposta}`);
-    });
-
-    return false;
-  }
 
 
-  } 
+ 
 
-  function verificar(nomeEmp,metrica,fkComponente) {
-
-    let alertar = 0
-    let componente = ""
-    let frase = ""
-
-
-      if (fkComponente == 2) {
-        componente = "CPU"
-      if (metrica > 50 && metrica < 75) {
-      alertar = 1
-      frase = "Alerta"
-      } 
-      else if (metrica >= 75) {
-      frase = "Perigo"
-      alertar = 1
-    }
-      }
-
-      if (fkComponente == 5) {
-        componente = "RAM"
-      if (metrica > 50 && metrica < 75) {
-        alertar = 1
-      frase = "Alerta"
-      } 
-      else if (metrica >= 75) {
-        alertar = 1
-      frase = "Perigo"
-    }
-  }
-    
-    if (fkComponente == 9) {
-        componente = "Disco"
-      if (metrica > 50 && metrica < 75) {
-        alertar = 1
-      frase = "Alerta"
-      } 
-      else if (metrica >= 75) {
-        alertar = 1
-      frase = "Perigo"
-    }
-  }
-
-    if (fkComponente == 12) {
-        componente = "Internet"
-      if (metrica > 50 && metrica < 75) {
-        alertar = 1
-      frase = "Alerta"
-      } 
-      else if (metrica >= 75) {
-        alertar = 1
-      frase = "Perigo"
-    }
-  }
-
-    if (fkComponente == 22) {
-        componente = "Temperatura CPU"
-      if (metrica > 50 && metrica < 75) {
-        alertar = 1
-      frase = "Alerta"
-      } 
-      else if (metrica >= 75) {
-        alertar = 1
-      frase = "Perigo"
-    }
-  }
-
-    if (fkComponente == 23) {
-        componente = "Temperatura Placa Mãe"
-      if (metrica > 50 && metrica < 75) {
-        alertar = 1
-      frase = "Alerta"
-      } 
-      else if (metrica >= 75) {
-        alertar = 1
-      frase = "Perigo"
-    }
-  }
-  alertas(nomeEmp, componente, metrica, frase, alertar)
-}
+ 
 
 
 

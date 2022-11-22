@@ -311,7 +311,7 @@
 
   function ObterDados(fkTorre) {
     var nomeEmp = sessionStorage.NOME_EMPRESA
-    var nome = sessionStorage.NOME_USUÁRIO
+    
     var perfil
 
     if (sessionStorage.FK_PERFIL == 2) {
@@ -706,6 +706,7 @@
         metricaServer: metrica,
         criticidadeServer: frase,
         nomeEmpServer: nomeEmp,
+        
       })
     }).then(function (resposta) {
       if (resposta.ok) {
