@@ -472,7 +472,7 @@ function alertas(req, res) {
         res.status(400).send("Seu nome da empresa está undefined!");
     } else {
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.alertas(nomeEmp,componente, metrica, criticidade, fkTorre)
+        usuarioModel.alertas(nomeEmp,componente, metrica, criticidade)
             .then(
                 function (resultado) {
                     res.json(resultado);
