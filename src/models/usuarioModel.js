@@ -169,7 +169,7 @@ function alertas(nomeEmp,componente,metrica,criticidade) {
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
     var instrucao = `
-    INSERT INTO AlertaRenato (nomeEmp,componente,metrica,criticidade) VALUES ('${nomeEmp}','${componente}', '${metrica}', '${criticidade}');
+    INSERT INTO AlertaRenato (nomeEmp,componente,metrica,criticidade, DataHora) VALUES ('${nomeEmp}','${componente}', '${metrica}', '${criticidade}', GETDATE());
     `;      
     
     console.log("Executando a instrução SQL: \n" + instrucao);

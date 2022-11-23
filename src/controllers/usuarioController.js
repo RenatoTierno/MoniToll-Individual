@@ -454,7 +454,7 @@ usuarioModel.ObterComponentes(fkTorre)
 }
 
 function alertas(req, res) {
-    // Crie uma variável que vá recuperar os valores do arquivo dashboard.html
+    // Crie uma variável que vá recuperar os valores do função alertas
     var componente = req.body.componenteServer;
     var metrica = req.body.metricaServer;
     var criticidade = req.body.criticidadeServer;
@@ -482,7 +482,7 @@ function alertas(req, res) {
                 function (erro) {
                     console.log(erro);
                     console.log(
-                        "\nHouve um erro ao realizar o cadastro! Erro: ",
+                        "\nHouve um erro na Usuário controller alertas! Erro: ",
                         erro.sqlMessage
                     );
                     res.status(500).json(erro.sqlMessage);
