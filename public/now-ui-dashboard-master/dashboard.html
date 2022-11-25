@@ -63,10 +63,8 @@
             </a>
           </li>
           <li>
-            <a href="dashboardAlertas.html" target="_blank">
-              <i class="now-ui-icons business_chart-pie-36
-
-              "></i>
+            <a href="javascript:IrPraDashAlertas(sessionStorage.ID_TORRE, sessionStorage.LOCALIZACAO, sessionStorage.NOME_EMPRESA)">
+              <i class="now-ui-icons business_chart-pie-36"></i>
               <p class="maior">Alertas</p>
             </a>
           </li>
@@ -809,7 +807,13 @@
   alertas(nomeEmp, componente, metrica, frase, alertar)
 }
 
+function IrPraDashAlertas(fkTorre, localizacao, nomeEmp) {
+        sessionStorage.ID_TORRE = fkTorre
+        sessionStorage.LOCALIZACAO = localizacao
+        sessionStorage.NOME_EMPRESA = nomeEmp
 
+        window.open('../now-ui-dashboard-master/dashboardAlertas.html', '_blank') 
+    }
 
     
 </script>
