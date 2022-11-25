@@ -67,4 +67,8 @@ router.post("/ObterNomeEmp", function (req, res) {
 router.post("/alertas", function (req, res) {
     usuarioController.alertas(req, res);
 });
+
+router.post("/ObterAlertas", function (req, res) {
+    usuarioController.ObterAlertas(req, res);
+});
 module.exports = router;

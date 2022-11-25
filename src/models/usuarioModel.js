@@ -176,6 +176,15 @@ function alertas(nomeEmp,componente,metrica,criticidade) {
     return database.executar(instrucao);
 }
 
+function ObterAlertas(nomeEmp) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", nomeEmp)
+    var instrucao = `
+    select componente, count(AlertaRenato.componente) from AlertaRenato where nomeEmp = '${nomeEmp}' group by componente;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 module.exports = {
     entrar,
     cadastrar,

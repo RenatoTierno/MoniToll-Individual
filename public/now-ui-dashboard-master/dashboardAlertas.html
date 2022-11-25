@@ -304,6 +304,7 @@
 
 <script>
   var vetor_Componentes = []
+  var vetor_Alertas = []
   var nomeEmp = sessionStorage.NOME_EMPRESA
   var nome = sessionStorage.NOME_USUÁRIO
 
@@ -353,13 +354,13 @@
 
 
     // ---------------------------------  Obter Componentes
-    fetch("/usuarios/ObterComponentes", {
+    fetch("/usuarios/ObterAlertas", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        fkTorreServer: fkTorre,
+        nomeEmpServer: nomeEmp,
       })
     }).then(function (resposta) {
       console.log("ESTOU NO THEN DO entrar()!")
@@ -372,20 +373,14 @@
           console.log(JSON.stringify(json));
 
           json.forEach(element => {
-            vetor_Componentes.push(element.fkComponente)
+            vetor_Alertas.push(element.resposta)
           });
         });
       }
     }).catch(function (erro) {
       console.log("ERRO: " + erro);
     })
-    setTimeout(() =>
-      ObterDataHora(sessionStorage.ID_TORRE),
-      ObterPorcentagemRAM(sessionStorage.ID_TORRE),
-      ObterPorcentagemPercaPacotes(sessionStorage.ID_TORRE),
-      ObterPorcentagemCPU(sessionStorage.ID_TORRE),
-      ObterPorcentagemDisco(sessionStorage.ID_TORRE)
-      , 2000);
+    
     setTimeout(() => AparecerGraficos(vetor_Componentes, fkTorre), 3000);
 
   }
