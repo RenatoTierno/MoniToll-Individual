@@ -389,7 +389,7 @@
       console.log("ERRO: " + erro);
     })
     
-    setTimeout(() => PlotarGrafico(vetor_Alertas,sessionStorage.ID_TORRE,'myChartTOTAL', vetor_Componentes), 3000);
+    setTimeout(() => PlotarGrafico(vetor_Alertas,sessionStorage.ID_TORRE,'myChartTOTAL', vetor_Componentes),500);
 
   }
 
@@ -560,7 +560,7 @@
     {
       label: 'Dataset 1',
       data: vetor,
-      backgroundColor: ['red','green'],
+      backgroundColor: ['red','yellow'],
     }
   ]
 };
@@ -609,13 +609,16 @@
     );
 
 
+
     
   }
 
 
   function atualizarGrafico(data, myChart) {
 
+    
 
+    
     // fetch(`/medidas/tempo-real/${fkTorre}/${fkComponente}`, { cache: 'no-store' }).then(function (response) {
     //   if (response.ok) {
     //     response.json().then(function (novoRegistro) {
