@@ -140,15 +140,20 @@
       <div class="content">
         <div class="row">
           <div class="col-md-12">
-            <div class="cardResponsivo card">
+            <div class="cardResponsivo card" style="display: flex; align-items: center;">
               <div class="card-header">
                 <h4 id="h4_titulo" class="card-title">
                 </h4>
               </div>
               <div id="lista" class="lista">
-                <div class="CardGrafico"><h4 style="margin-top: 10px; margin-bottom: 0px;">Total de Alertas</h4><canvas style="width: 100%; display: block;" id="myChartTOTAL"></canvas></div>
+                <div class="CardGrafico"><h4 style="margin: 0 auto;">Total de Alertas</h4><canvas style="width: 100%; display: flex; height: 500px;" id="myChartTOTAL"></canvas></div>
               </div>
+              <div id="lista" class="lista">
+                <div class="CardGrafico"><h4 style="margin: 0 auto; ">Criticidade dos Alertas</h4><canvas style="width: 100%; display: flex; height: 500px;" id="myChartCRITICIDADE"></canvas></div>
+              </div>
+
             </div>
+            
           </div>
         </div>
       </div>
@@ -394,23 +399,6 @@
   }
 
 
-  function AparecerGraficos(vetor_Alertas, fkTorre) {
-    vetor_Componentes.forEach(element => {
-      if (element == 2) {
-        lista.innerHTML += `<div class="CardGrafico"><h4 style="margin-top: 10px; margin-bottom: 0px;">Alertas RAM</h4><canvas style="width: 100%; display: block;" id="myChartCPU"></canvas></div>`
-        setTimeout(() => PlotarGrafico(vetor_PorcentagemUsoCPU, sessionStorage.ID_TORRE, 'myChartPUC', 'Porcentagem uso CPU'), 2000);
-      } else if (element == 5) {
-        lista.innerHTML += `<div class="CardGrafico"><h4 style="margin-top: 10px; margin-bottom: 0px;">Porcentagem uso Ram</h4><canvas style="width: 100%; display: block;" id="myChartRAM"></canvas></div>`
-        setTimeout(() => PlotarGrafico(vetor_PorcentagemUsoRam, sessionStorage.ID_TORRE, 'myChartPUR', 'Porcentagem uso Ram'), 2000);
-      } else if (element == 9) {
-        lista.innerHTML += `<div class="CardGrafico"><h4 style="margin-top: 10px; margin-bottom: 0px;">Porcentagem uso Disco</h4><canvas style="width: 100%; display: block;" id="myChartDISCO"></canvas></div>`
-        setTimeout(() => PlotarGrafico(vetor_PorcentagemUsoDisco, sessionStorage.ID_TORRE, 'myChartPUD', 'Porcentagem uso Disco'), 2000);
-      } else if (element == 12) {
-        lista.innerHTML += `<div class="CardGrafico"><h4 style="margin-top: 10px; margin-bottom: 0px;">Porcentagem pacotes perdidos</h4><canvas style="width: 100%; display: block;" id="myChartPACOTES"></canvas></div>`
-        setTimeout(() => PlotarGrafico(vetor_PorcentagemPercaPacotes, sessionStorage.ID_TORRE, 'myChartPUP', 'Porcentagem pacotes perdidos'), 2000);
-      }
-    });
-  }
 </script>
 <script>
   var vetor_DataHora = []
