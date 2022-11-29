@@ -304,6 +304,8 @@
 
 <script>
   var vetor_Componentes = []
+
+
   var nomeEmp = sessionStorage.NOME_EMPRESA
   var nome = sessionStorage.NOME_USUÁRIO
 
@@ -670,7 +672,7 @@
     
 
   function alertas(nomeEmp, componente, metrica, frase, alertar) {
-
+    var fkTorre = sessionStorage.ID_TORRE
     if (alertar == 1) {
     const open = document.getElementById('open');
     const modal_container = document.getElementById('modal_container');
@@ -705,6 +707,7 @@
         metricaServer: metrica,
         criticidadeServer: frase,
         nomeEmpServer: nomeEmp,
+        fkTorreServer: fkTorre
         
       })
     }).then(function (resposta) {
