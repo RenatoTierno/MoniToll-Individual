@@ -68,7 +68,11 @@ router.post("/alertas", function (req, res) {
     usuarioController.alertas(req, res);
 });
 
-router.post("/ObterAlertas", function (req, res) {
-    usuarioController.ObterAlertas(req, res);
+router.post("/ObterAlertasTorre", function (req, res) {
+    usuarioController.ObterAlertasTorre(req, res);
+});
+
+router.post("/ObterAlertasEmpresa", function (req, res) {
+    usuarioController.ObterAlertasEmpresa(req, res);
 });
 module.exports = router;

@@ -25,7 +25,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
 </head>
 
-<body onload="ObterDados(sessionStorage.ID_TORRE), ObterAlertas()" class="">
+<body onload="ObterDados(sessionStorage.ID_TORRE), ObterAlertasTorre(), ObterAlertasEmpresa()" class="">
   <div class="wrapper ">
     <div class="sidebar" data-color="orange">
       <!--
@@ -145,8 +145,9 @@
                 <h4 id="h4_titulo" class="card-title">
                 </h4>
               </div>
-              <div id="lista" class="lista2">
-                <div class="CardGrafico2"><h4 style="margin: 0 auto;">Total de Alertas</h4><canvas style="width: 100%; display: flex; height: 500px;" id="myChartTOTAL"></canvas></div>
+              <div id="lista" class="lista">
+                <div class="CardGrafico"><h4 style="margin: 0 auto;" id="grafico_torre">Total de Alertas da Torre</h4><canvas style="width: 100%; display: flex; height: 500px;" id="myChartTOTAL"></canvas></div>
+                <div class="CardGrafico"><h4 style="margin: 0 auto; ">Total de Alertas da Empresa</h4><canvas style="width: 100%; display: flex; height: 500px;" id="myChartEMPRESA"></canvas></div>
               </div>
               <div id="lista" class="lista2">
                 <div class="CardGrafico2"><h4 style="margin: 0 auto; ">Criticidade dos Alertas</h4><canvas style="width: 100%; display: flex; height: 500px;" id="myChartCRITICIDADE"></canvas></div>
@@ -312,10 +313,7 @@
 </script>
 
 <script>
-  var vetor_Componentes = []
-  var vetor_Alertas = []
-
-
+  
   var nomeEmp = sessionStorage.NOME_EMPRESA
   var nome = sessionStorage.NOME_USUÁRIO
 
@@ -365,14 +363,18 @@
 
 
    // ---------------------------------  Obter Alertas
-   function ObterAlertas() {
-    fetch("/usuarios/ObterAlertas", {
+   function ObterAlertasTorre() {
+    let fkTorre = sessionStorage.ID_TORRE
+    var vetor_Componentes = []
+    var vetor_Alertas = []
+    fetch("/usuarios/ObterAlertasTorre", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
         nomeEmpServer: nomeEmp,
+        fkTorreServer: fkTorre
       })
     }).then(function (resposta) {
       console.log("ESTOU NO THEN DO entrar()!")
@@ -399,6 +401,47 @@
     setTimeout(() => PlotarGrafico(vetor_Alertas,sessionStorage.ID_TORRE,'myChartTOTAL', vetor_Componentes),1000);
 
   }
+
+  function ObterAlertasEmpresa() {
+    
+    var vetor_Componentes2 = []
+    var vetor_Alertas2 = []
+    fetch("/usuarios/ObterAlertasEmpresa", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        nomeEmpServer: nomeEmp,
+
+      })
+    }).then(function (resposta) {
+      console.log("ESTOU NO THEN DO entrar()!")
+
+      if (resposta.ok) {
+        console.log(resposta);
+
+        resposta.json().then(json => {
+          console.log(json);
+          console.log(JSON.stringify(json));
+
+          json.forEach(element => {
+            vetor_Alertas2.push(element.Quantidade)
+            vetor_Componentes2.push(element.componente)
+          });
+        });
+        console.log(vetor_Alertas2)
+        console.log(vetor_Componentes2)
+      }
+    }).catch(function (erro) {
+      console.log("ERRO: " + erro);
+    })
+    
+    setTimeout(() => PlotarGrafico(vetor_Alertas2,sessionStorage.ID_TORRE,'myChartEMPRESA', vetor_Componentes2),1000);
+
+  }
+  
+  
 
 
 </script>
@@ -528,16 +571,8 @@
 
   function PlotarGrafico(vetor, fkTorre, idCanva, label) {
 
-    if (idCanva == 'myChartPUC') {
-      fkComponenteVar = 2
-    } else if (idCanva == 'myChartPUR') {
-      fkComponenteVar = 5
-    } else if (idCanva == 'myChartPUD') {
-      fkComponenteVar = 9
-    } else if (idCanva == 'myChartPUP') {
-      fkComponenteVar = 12
-    }
-
+    
+    if (idCanva == 'myChartEMPRESA' || idCanva == 'myChartTOTAL') {
     
     console.log('iniciando plotagem do gráfico...');
 
@@ -557,7 +592,7 @@
 
     console.log('----------------------------------------------')
     console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
-    console.log(vetor_leituras)
+    
 
     // Inserindo valores recebidos em estrutura para plotar o gráfico
 
@@ -599,18 +634,32 @@
     );
 
 
-    setTimeout(() => atualizarGrafico(data,myChart),7000);
-    
+    setTimeout(() => atualizarGrafico(data,myChart,idCanva),7000);
+}
   }
 
 
-  function atualizarGrafico(data, myChart) {
+  function atualizarGrafico(data, myChart,idCanva) {
 
-    myChart.destroy()
+    if (idCanva == 'myChartTOTAL') {
+      myChart.destroy()
+    
     vetor_Alertas = []
     vetor_Componentes= []
 
-    setTimeout(() => ObterAlertas(),500);
+    setTimeout(() => ObterAlertasTorre(),500);
+
+    } else if (idCanva == 'myChartEMPRESA') {
+      myChart.destroy()
+    
+    vetor_Alertas2 = []
+    vetor_Componentes2 = []
+    setTimeout(() => ObterAlertasEmpresa(),500);
+
+    }
+    
+
+
     
   }
 
