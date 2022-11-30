@@ -75,4 +75,8 @@ router.post("/ObterAlertasTorre", function (req, res) {
 router.post("/ObterAlertasEmpresa", function (req, res) {
     usuarioController.ObterAlertasEmpresa(req, res);
 });
+
+router.post("/ObterCriticidadeTorre", function (req, res) {
+    usuarioController.ObterCriticidadeTorre(req, res);
+});
 module.exports = router;

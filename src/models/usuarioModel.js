@@ -194,6 +194,15 @@ function ObterAlertasEmpresa(nomeEmp) {
     return database.executar(instrucao);
 }
 
+function ObterCriticidadeTorre(nomeEmp,fkTorre) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", nomeEmp, fkTorre)
+    var instrucao = `
+    select componente, count((case when criticidade = 'Alerta' then criticidade end)) as Alerta, count((case when criticidade = 'Perigo' then criticidade end)) as Perigo from AlertaRenato where nomeEmp = '${nomeEmp}' and fkTorre = ${fkTorre} group by componente;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 module.exports = {
     entrar,
     cadastrar,
@@ -212,4 +221,5 @@ module.exports = {
     alertas,
     ObterAlertasTorre,
     ObterAlertasEmpresa,
+    ObterCriticidadeTorre
 };

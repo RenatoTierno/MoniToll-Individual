@@ -558,6 +558,40 @@ usuarioModel.ObterAlertasEmpresa(nomeEmp)
 }
 }
 
+function ObterCriticidadeTorre(req, res) {
+    var nomeEmp = req.body.nomeEmpServer;
+    var fkTorre = req.body.fkTorreServer
+    
+    
+    if(nomeEmp == undefined) {
+        res.status(400).send("Seu nome empresa está undefined!");
+    }else if(fkTorre == undefined){
+        res.status(400).send("Sua fkTorre está undefined!")
+    } else {
+        
+usuarioModel.ObterCriticidadeTorre(nomeEmp,fkTorre)
+    .then(
+        function (resultado) {
+            console.log(`\nResultados encontrados: ${resultado.length}`);
+            console.log(`Resultados: ${JSON.stringify(resultado)}`); // transforma JSON em String
+
+            if (resultado.length != 0) {
+                console.log(resultado);
+                res.json(resultado);
+            } else if (resultado.length == 0) {
+                res.status(403).send("Não tem Alertas");
+            }
+        }
+    ).catch(
+        function (erro) {
+            console.log(erro);
+            console.log("\nHouve um erro ao verificar os alertas! Erro: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        }
+    );
+}
+}
+
 module.exports = {
     entrar,
     cadastrar,
@@ -577,4 +611,5 @@ module.exports = {
     alertas,
     ObterAlertasTorre,
     ObterAlertasEmpresa,
+    ObterCriticidadeTorre
 }
